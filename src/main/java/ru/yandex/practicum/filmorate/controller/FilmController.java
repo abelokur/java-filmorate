@@ -24,7 +24,7 @@ public class FilmController {
 
     @PostMapping
     public Film create(@RequestBody Film film) throws ParseException {
-        Validation(film);
+        validation(film);
 
         film.setId(++filmId);
         films.put(film.getId(), film);
@@ -53,13 +53,13 @@ public class FilmController {
         return films.values();
     }
 
-    private static void Validation(Film film) {
+    private static void validation(Film film) {
 
         if (film.getName().isEmpty()) {
             log.warn("Название не может быть пустым {}", film);
             throw new ValidationException("Название не может быть пустым");
         }
-        if (film.getDescription().length() > 200 ) {
+        if (film.getDescription().length() > 200) {
             log.warn("Максимальная длина описания — 200 символов. Длина описания {} - Описание: {}", film.getDescription().length(), film.getDescription());
             throw new ValidationException("Максимальная длина описания — 200 символов");
         }
