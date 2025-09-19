@@ -1,12 +1,26 @@
 package ru.yandex.practicum.filmorate.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.Data;
+
+import java.time.Duration;
+import java.time.LocalDate;
 
 /**
  * Film.
  */
-@Getter
-@Setter
+@Data
 public class Film {
+
+    private int id;
+
+    private String name;
+
+    private String description;
+
+    private LocalDate releaseDate;
+
+    @JsonSerialize(using = MyDurationSerializer.class)
+    private Duration duration;
+
 }
