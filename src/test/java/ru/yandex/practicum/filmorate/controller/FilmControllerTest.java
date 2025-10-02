@@ -5,6 +5,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.service.FilmService;
+import ru.yandex.practicum.filmorate.storage.film.InMemoryFilmStorage;
+import ru.yandex.practicum.filmorate.storage.user.InMemoryUserStorage;
 
 import java.text.ParseException;
 import java.time.Duration;
@@ -17,10 +20,13 @@ public class FilmControllerTest {
 
     private FilmController filmController;
     private Film film;
+    private InMemoryFilmStorage inMemoryFilmStorage;
+    private FilmService filmService;
 
     @BeforeEach
     void setUp() {
-        filmController = new FilmController();
+        inMemoryFilmStorage = new InMemoryFilmStorage();
+        filmController = new FilmController(inMemoryFilmStorage, filmService);
         film = FilmControllerTest.Stub.getFilm();
 
     }
@@ -97,7 +103,7 @@ public class FilmControllerTest {
     public void test_WrongReleaseDate() {
         //given
         film = Stub.getFilm();
-        film.setReleaseDate(FilmController.CINEMA_BIRTHDAY.minusDays(1));
+        film.setReleaseDate(InMemoryFilmStorage.CINEMA_BIRTHDAY.minusDays(1));
 
         //when
         ValidationException exception = assertThrows(ValidationException.class,
