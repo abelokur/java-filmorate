@@ -8,6 +8,7 @@ import ru.yandex.practicum.filmorate.service.FilmService;
 import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
 import java.text.ParseException;
 import java.util.Collection;
+import java.util.Set;
 
 @Slf4j
 @RestController
@@ -58,7 +59,7 @@ public class FilmController {
     }
 
     @GetMapping("/popular")
-    public Collection<Film> getMostPopular(@RequestParam(defaultValue = "10") long count) {
+    public Set<Film> getMostPopular(@RequestParam(defaultValue = "10") long count) {
         return filmService.getMostPopular(count);
     }
 }
