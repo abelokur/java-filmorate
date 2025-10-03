@@ -54,15 +54,13 @@ public class FilmService {
     }
 
     public Set<Film> getMostPopular(long count) {
-        System.out.println("--------------------");
-        System.out.println(inMemoryFilmStorage
+        /*return inMemoryFilmStorage
                 .findAll().stream()
-                .sorted(Comparator.comparing(f -> f.getLikes().size())).limit(count)//.toString()
-                .collect(Collectors.toSet())
-        );
+                .sorted(Comparator.comparingInt((Film f) -> f.getLikes().size()).reversed()).limit(count)//.toString();
+                .collect(Collectors.toSet());*/
         return inMemoryFilmStorage
                 .findAll().stream()
-                .sorted(Comparator.comparing(f -> f.getLikes().size())).limit(count)//.toString();
+                .sorted(Comparator.comparingInt((Film f) -> f.getLikes().size()).reversed()).limit(count)//.toString();
                 .collect(Collectors.toSet());
     }
 

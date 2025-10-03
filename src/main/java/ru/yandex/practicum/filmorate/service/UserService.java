@@ -6,6 +6,7 @@ import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.user.UserStorage;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -48,18 +49,32 @@ public class UserService {
         return user;
     }
 
-    public Collection<Long> getAllFriends(long id) {
+    public Collection<User> getAllFriends(long id) {
 
-        return getUser(id).getFriends();
+        //return getUser(id).getFriends();
+        User user = getUser(id);
+        return user.getFriends().stream()
+                .map(this::getUserById)
+                .collect(Collectors.toList());
 
     }
 
-    public Collection<Long> getCommonFriends(long id, long otherId) {
+    public User getUserById(long id) {
+        return getUser(id);
+    }
 
+    public Collection<User> getCommonFriends(long id, long otherId) {
         User user = getUser(id);
         User otherUser = getUser(otherId);
 
-        return user.findCommonFriends(otherUser);
+        return user.findCommonFriends(otherUser).stream()
+                .map(this::getUserById)
+                .collect(Collectors.toList());
+        /*
+        User user = getUser(id);
+        User otherUser = getUser(otherId);
+
+        return user.findCommonFriends(otherUser);*/
     }
 
     public User getCommonFriends1(long id, long otherId) {
