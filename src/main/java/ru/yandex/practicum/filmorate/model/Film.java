@@ -5,6 +5,8 @@ import lombok.Data;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Film.
@@ -12,7 +14,7 @@ import java.time.LocalDate;
 @Data
 public class Film {
 
-    private int id;
+    private long id;
 
     private String name;
 
@@ -23,4 +25,5 @@ public class Film {
     @JsonSerialize(using = MyDurationSerializer.class)
     private Duration duration;
 
+    private Set<Long> likes = new HashSet<>();
 }
