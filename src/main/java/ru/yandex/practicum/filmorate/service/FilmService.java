@@ -54,10 +54,9 @@ public class FilmService {
     }
 
     public Set<Film> getMostPopular(long count) {
-
         return inMemoryFilmStorage
                 .findAll().stream()
-                .sorted(Comparator.comparingInt((Film f) -> f.getLikes().size()).reversed()).limit(count)
+                .sorted(Comparator.comparingInt((Film f) -> f.getLikes().size()).reversed()).limit(count)//.toString();
                 .collect(Collectors.toSet());
     }
 
