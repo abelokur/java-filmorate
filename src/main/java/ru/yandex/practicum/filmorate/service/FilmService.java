@@ -57,7 +57,7 @@ public class FilmService {
 
         return inMemoryFilmStorage
                 .findAll().stream()
-                .sorted(Comparator.comparingInt((Film f) -> f.getLikes().size()).reversed()).limit(count)//.toString();
+                .sorted(Comparator.comparingInt((Film f) -> f.getLikes().size()).reversed()).limit(count)
                 .collect(Collectors.toSet());
     }
 

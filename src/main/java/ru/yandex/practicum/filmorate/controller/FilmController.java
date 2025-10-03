@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.service.FilmService;
-import ru.yandex.practicum.filmorate.storage.film.InMemoryFilmStorage;
+import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
 import java.text.ParseException;
 import java.util.Collection;
 import java.util.Set;
@@ -15,32 +15,37 @@ import java.util.Set;
 @RequestMapping("/films")
 public class FilmController {
 
-    private final InMemoryFilmStorage inMemoryFilmStorage;
+    private final FilmStorage filmStorage;
     private final FilmService filmService;
 
     @Autowired
-    public FilmController(InMemoryFilmStorage inMemoryFilmStorage, FilmService filmService) {
+    public FilmController(FilmStorage filmStorage, FilmService filmService) {
 
-        this.inMemoryFilmStorage = inMemoryFilmStorage;
+        this.filmStorage = filmStorage;
         this.filmService = filmService;
+    }
+
+    @GetMapping("/{id}")
+    public Film getFilm(@PathVariable long id) {
+        return filmStorage.getById(id);
     }
 
     @PostMapping
     public Film create(@RequestBody Film film) throws ParseException {
 
-        return inMemoryFilmStorage.create(film);
+        return filmStorage.create(film);
     }
 
     @PutMapping
     public Film update(@RequestBody Film film) {
 
-        return inMemoryFilmStorage.update(film);
+        return filmStorage.update(film);
     }
 
     @GetMapping
     public Collection<Film> findAll() {
 
-        return inMemoryFilmStorage.findAll();
+        return filmStorage.findAll();
     }
 
     @PutMapping("/{id}/like/{userId}")
