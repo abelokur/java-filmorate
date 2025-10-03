@@ -51,7 +51,6 @@ public class UserService {
 
     public Collection<User> getAllFriends(long id) {
 
-        //return getUser(id).getFriends();
         User user = getUser(id);
         return user.getFriends().stream()
                 .map(this::getUserById)
@@ -64,17 +63,14 @@ public class UserService {
     }
 
     public Collection<User> getCommonFriends(long id, long otherId) {
+
         User user = getUser(id);
         User otherUser = getUser(otherId);
 
         return user.findCommonFriends(otherUser).stream()
                 .map(this::getUserById)
                 .collect(Collectors.toList());
-        /*
-        User user = getUser(id);
-        User otherUser = getUser(otherId);
 
-        return user.findCommonFriends(otherUser);*/
     }
 
     public User getCommonFriends1(long id, long otherId) {
