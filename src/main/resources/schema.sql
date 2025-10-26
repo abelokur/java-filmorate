@@ -63,6 +63,15 @@ CREATE TABLE IF NOT EXISTS Friends (
      )
 );
 
+CREATE TABLE IF NOT EXISTS rating_mpa (
+    id int   NOT NULL,
+    film_id int   NOT NULL,
+    name varchar(100)   NOT NULL,
+    CONSTRAINT pk_rating_mpa PRIMARY KEY (
+        id
+     )
+);
+
 ALTER TABLE likes ADD CONSTRAINT IF NOT EXISTS fk_likes_film_id FOREIGN KEY(film_id)
 REFERENCES Films (id);
 
@@ -81,6 +90,10 @@ REFERENCES Users (id);
 ALTER TABLE Friends ADD CONSTRAINT IF NOT EXISTS fk_Friends_friend_id FOREIGN KEY(friend_id)
 REFERENCES Users (id);
 
+ALTER TABLE rating_mpa ADD CONSTRAINT IF NOT EXISTS fk_rating_mpa_film_id FOREIGN KEY(film_id)
+REFERENCES Films (id);
+
+--DROP TABLE rating_mpa;
 --DROP TABLE likes;
 --DROP TABLE films_genres_link;
 --DROP TABLE genres;
