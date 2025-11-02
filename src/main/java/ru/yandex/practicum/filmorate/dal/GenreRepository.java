@@ -11,9 +11,10 @@ import java.util.Optional;
 
 @Slf4j
 @Service
-public class GenreRepository extends BaseRepository<Genres>{
+public class GenreRepository extends BaseRepository<Genres> {
     private static final String FIND_ALL_QUERY = "SELECT * FROM genres";
     private static final String FIND_BY_ID = "SELECT * FROM genres WHERE id = ?";
+
     public GenreRepository(JdbcTemplate jdbc, GenreRowMapper mapper) {
         super(jdbc, mapper);
     }
