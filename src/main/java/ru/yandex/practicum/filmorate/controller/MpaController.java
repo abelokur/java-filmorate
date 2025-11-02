@@ -27,6 +27,7 @@ public class MpaController {
     public Collection<Mpa> findAll() {
         return mpaRepository.findAll();
     }
+
     @GetMapping("/{id}")
     public Mpa getMpa(@PathVariable long id) {
         return mpaRepository.getById(id);
