@@ -7,21 +7,21 @@
 -- two dots ('..' - without quotes).
 
 -----------------
-DELETE FROM films_genres_link;
-DELETE FROM likes;
-DELETE FROM Friends;
-DELETE FROM films;
-DELETE FROM users;
-DELETE FROM GENRES;
-DELETE FROM MPA;
+--DELETE FROM films_genres_link;
+--DELETE FROM likes;
+--DELETE FROM Friends;
+--DELETE FROM films;
+--DELETE FROM users;
+--DELETE FROM GENRES;
+--DELETE FROM MPA;
 
-DROP TABLE likes;
-DROP TABLE films_genres_link;
-DROP TABLE genres;
-DROP TABLE friends;
-DROP TABLE films;
-DROP TABLE users;
-DROP TABLE mpa;
+DROP TABLE IF EXISTS likes;
+DROP TABLE IF EXISTS films_genres_link;
+DROP TABLE IF EXISTS genres;
+DROP TABLE IF EXISTS friends;
+DROP TABLE IF EXISTS films;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS mpa;
 
 -----------------
 CREATE TABLE IF NOT EXISTS Films (
