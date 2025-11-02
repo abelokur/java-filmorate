@@ -102,9 +102,9 @@ public class UserRepository extends BaseRepository<User> implements UserStorage 
         Friends friend = new Friends();
         friend.setId(friendId);
 
-        Set<Friends> UserFriends = user.getFriends();
-        UserFriends.add(friend);
-        user.setFriends(UserFriends);
+        Set<Friends> userFriends = user.getFriends();
+        userFriends.add(friend);
+        user.setFriends(userFriends);
 
         long rowid = insert(
                 ADD_FRIEND,
@@ -131,7 +131,7 @@ public class UserRepository extends BaseRepository<User> implements UserStorage 
 
     public User removeFriend(Long id, Long friendId) {
 
-        Optional<User> userFriend = findOne( FIND_BY_ID_QUERY, friendId);
+        Optional<User> userFriend = findOne(FIND_BY_ID_QUERY, friendId);
         if (userFriend.isEmpty()) {
             throw new NotFoundException("Пользователь с id: " + friendId + " не существует");
         }
@@ -198,7 +198,7 @@ public class UserRepository extends BaseRepository<User> implements UserStorage 
             for (int idx = 0; idx < params.length; idx++) {
                 ps.setObject(idx + 1, params[idx]);
             }
-            return ps;}, keyHolder);
+            return ps; }, keyHolder);
 
         int id = keyHolder.getKeyAs(Integer.class);
         return id;
