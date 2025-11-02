@@ -16,7 +16,7 @@ public class UserService {
     public UserService(UserStorage inMemoryUserStorage) {
         this.inMemoryUserStorage = inMemoryUserStorage;
     }
-
+/*
     public User addFriend(Long id, Long friendId) {
 
         User user = getUser(id);
@@ -57,11 +57,11 @@ public class UserService {
                 .collect(Collectors.toList());
 
     }
-
+*/
     public User getUserById(long id) {
         return getUser(id);
     }
-
+/*
     public Collection<User> getCommonFriends(long id, long otherId) {
 
         User user = getUser(id);
@@ -72,7 +72,7 @@ public class UserService {
                 .collect(Collectors.toList());
 
     }
-
+*/
     public User getCommonFriends1(long id, long otherId) {
 
         User user = getUser(id);

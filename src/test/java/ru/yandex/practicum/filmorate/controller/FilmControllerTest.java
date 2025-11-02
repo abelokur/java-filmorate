@@ -22,6 +22,7 @@ public class FilmControllerTest {
     private InMemoryFilmStorage inMemoryFilmStorage;
     private FilmService filmService;
 
+    /*
     @BeforeEach
     void setUp() {
         inMemoryFilmStorage = new InMemoryFilmStorage();
@@ -29,6 +30,7 @@ public class FilmControllerTest {
         film = FilmControllerTest.Stub.getFilm();
 
     }
+    */
 
     @Test
     @DisplayName("Добавление фильма проверка Duration")
