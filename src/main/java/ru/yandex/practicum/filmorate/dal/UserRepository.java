@@ -1,16 +1,12 @@
 package ru.yandex.practicum.filmorate.dal;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.InternalServerException;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
-import ru.yandex.practicum.filmorate.model.ErrorResponse;
 import ru.yandex.practicum.filmorate.model.Friends;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.user.UserStorage;
@@ -44,19 +40,9 @@ public class UserRepository extends BaseRepository<User> implements UserStorage 
         jdbcTemplate = jdbc;
     }
 
-    //private long userId = 0;
-    //private final Map<Long, User> users = new HashMap<>();
-
     @Override
     public User getById(long id) {
-        //String sqlQuery1 = "SELECT * FROM users WHERE id = ?";
 
-        //User user = jdbcTemplate.queryForObject(sqlQuery1, new UserRowMapper(), id);
-
-
-        //return user;
-
-        //Optional<User> user = Optional.ofNullable(users.get(id));
         Optional<User> user =  findOne(FIND_BY_ID_QUERY, id);
 
         if (user.isEmpty()) {
@@ -73,7 +59,6 @@ public class UserRepository extends BaseRepository<User> implements UserStorage 
         validation(user);
 
         long id = insert(
-        //int id = insert(
                 INSERT_QUERY,
                 user.getLogin(),
                 user.getName(),
@@ -118,30 +103,14 @@ public class UserRepository extends BaseRepository<User> implements UserStorage 
         friend.setId(friendId);
 
         Set<Friends> UserFriends = user.getFriends();
-        //Set<User> UserFriends = user.getFriends();
-        //UserFriends.add(UserFriend);
         UserFriends.add(friend);
         user.setFriends(UserFriends);
-
-        //
- /*         friend = new Friends();
-        friend.setId(id);
-        UserFriends = userFriend.getFriends();
-        UserFriends.add(friend);
-        userFriend.setFriends(UserFriends);
-*/
 
         long rowid = insert(
                 ADD_FRIEND,
                 user.getId(),
                 userFriend.getId()
         );
-
-/*        rowid = insert(
-                ADD_FRIEND,
-                userFriend.getId(),
-                user.getId()
-        );*/
 
         log.info("Пользователь {} дружит с {}", user, userFriend);
 
@@ -155,21 +124,15 @@ public class UserRepository extends BaseRepository<User> implements UserStorage 
         }
 
         Collection<User> users = findMany(FIND_ALL_FRIENDS, id);
-        //if (users.isEmpty()) {
-        //    throw new NotFoundException("У пользователя с id: " + id + " нет друзей");
-        //}
+
+        log.info("Друзья пользователя {}", users);
         return users;
     }
 
     public User removeFriend(Long id, Long friendId) {
-        /*User user = getById(id);
-        Set<Friends> friends = user.getFriends();
-        Friends friend = new Friends();
-        friend.setId(friendId);
-        friends.remove(friend);*/
 
-        Optional<User> optionalUserFriend = findOne( FIND_BY_ID_QUERY, friendId);
-        if (optionalUserFriend.isEmpty()) {
+        Optional<User> userFriend = findOne( FIND_BY_ID_QUERY, friendId);
+        if (userFriend.isEmpty()) {
             throw new NotFoundException("Пользователь с id: " + friendId + " не существует");
         }
 
@@ -185,7 +148,6 @@ public class UserRepository extends BaseRepository<User> implements UserStorage 
 
     public Collection<User> getCommonFriends(long id, long otherId) {
 
-        //User user = getUser(id);
         Optional<User> optionalUser = findOne(FIND_BY_ID_QUERY, id);
         User user = optionalUser.get();
 
@@ -203,9 +165,7 @@ public class UserRepository extends BaseRepository<User> implements UserStorage 
         }
 
         user.setFriends(friends);
-        System.out.println("user.setFriends: " + user);
 
-        //
         Optional<User> optionalOtherUser = findOne(FIND_BY_ID_QUERY, otherId);
         User otherUser = optionalOtherUser.get();
 
@@ -223,73 +183,36 @@ public class UserRepository extends BaseRepository<User> implements UserStorage 
         }
 
         otherUser.setFriends(friends);
-        System.out.println("otherUser.setFriends: " + otherUser);
 
         return user.findCommonFriends(otherUser).stream()
                 .map(this::getById)
                 .collect(Collectors.toList());
-        //return user.findCommonFriends(otherUser);
-
-        //return user.findCommonFriends(OtherUser).stream();
 
     }
 
-
-    protected /*long*/int insert(String query, Object... params) {
+    protected int insert(String query, Object... params) {
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         jdbc.update(connection -> {
             PreparedStatement ps = connection
                     .prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             for (int idx = 0; idx < params.length; idx++) {
                 ps.setObject(idx + 1, params[idx]);
-                System.out.println(params[idx]);
             }
             return ps;}, keyHolder);
 
-        //Long id = (Long) keyHolder.getKeyAs(Long.class);
         int id = keyHolder.getKeyAs(Integer.class);
-        //Optional<Integer> id = keyHolder.getKeyAs(Integer.class);
-        //keyHolder.
         return id;
-
-/*
-        // Возвращаем id нового пользователя
-        if (id != null) {
-            return id;
-        } else {
-            throw new InternalServerException("Не удалось сохранить данные");
-        }*/
     }
 
     protected void update(String query, Object... params) {
         int rowsUpdated = jdbc.update(query, params);
         if (rowsUpdated == 0) {
             throw new InternalServerException("Не удалось обновить данные");
-            //throw new handleNotFoundException("Не удалось обновить данные");
-            /*Exception e = new NotFoundException("Не удалось обновить данные");
-            throw new ErrorResponse(
-                    e.toString(),
-                    "404";*/
-            //throw new ErrorResponse("Не удалось обновить данные");
         }
     }
 
     protected void delete(String query, Object... params) {
-        int rowsUpdated = jdbc.update(query, params);
-        //if (rowsUpdated == 0) {
-        //    throw new InternalServerException("Не удалось удалить данные");
-        //}
-        //if (rowsUpdated == 0) {
-        //    throw new InternalServerException("Не удалось обновить данные");
-
-            //throw new handleNotFoundException("Не удалось обновить данные");
-            /*Exception e = new NotFoundException("Не удалось обновить данные");
-            throw new ErrorResponse(
-                    e.toString(),
-                    "404";*/
-            //throw new ErrorResponse("Не удалось обновить данные");
-
-        //}
+        jdbc.update(query, params);
     }
 
 

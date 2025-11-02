@@ -16,63 +16,11 @@ public class UserService {
     public UserService(UserStorage inMemoryUserStorage) {
         this.inMemoryUserStorage = inMemoryUserStorage;
     }
-/*
-    public User addFriend(Long id, Long friendId) {
 
-        User user = getUser(id);
-        User friend =  getUser(friendId);
-
-        user.getFriends().add(friendId);
-        friend.getFriends().add(id);
-
-        inMemoryUserStorage.update(user);
-        inMemoryUserStorage.update(friend);
-
-        return user;
-    }
-
-    public User removeFriend(long id, long friendId) {
-
-        User user = getUser(id);
-        User friend = getUser(friendId);
-
-        Set<Long> userFriends = user.getFriends();
-        userFriends.remove(friend.getId());
-        user.setFriends(userFriends);
-
-        userFriends = friend.getFriends();
-        userFriends.remove(user.getId());
-        friend.setFriends(userFriends);
-
-        inMemoryUserStorage.update(user);
-
-        return user;
-    }
-
-    public Collection<User> getAllFriends(long id) {
-
-        User user = getUser(id);
-        return user.getFriends().stream()
-                .map(this::getUserById)
-                .collect(Collectors.toList());
-
-    }
-*/
     public User getUserById(long id) {
         return getUser(id);
     }
-/*
-    public Collection<User> getCommonFriends(long id, long otherId) {
 
-        User user = getUser(id);
-        User otherUser = getUser(otherId);
-
-        return user.findCommonFriends(otherUser).stream()
-                .map(this::getUserById)
-                .collect(Collectors.toList());
-
-    }
-*/
     public User getCommonFriends1(long id, long otherId) {
 
         User user = getUser(id);

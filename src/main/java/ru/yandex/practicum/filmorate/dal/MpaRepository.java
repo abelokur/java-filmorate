@@ -4,9 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
-import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Mpa;
-import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -29,7 +27,6 @@ public class MpaRepository extends BaseRepository<Mpa>{
 
     public Mpa getById(long id) {
 
-        //Optional<User> user = Optional.ofNullable(users.get(id));
         Optional<Mpa> Mpa =  findOne(FIND_BY_ID_QUERY, id);
 
         if (Mpa.isEmpty()) {

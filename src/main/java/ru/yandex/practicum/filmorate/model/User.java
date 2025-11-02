@@ -4,7 +4,6 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Data
 public class User {
@@ -19,10 +18,7 @@ public class User {
 
     private LocalDate birthday;
 
-    //private Set<User> friends = new HashSet<>();
     private Set<Friends> friends = new HashSet<>();
-    //private Set<Long> friends = new HashSet<>();
-    //private List<User> friends = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
@@ -49,32 +45,10 @@ public class User {
     }
 
     public Set<Long> findCommonFriends(User otherUser) {
-    //public Set<Friends> findCommonFriends(User otherUser) {
 
         Set<Long> commonFriends = this.getFriendsId();//new HashSet<>();
-
-        System.out.println("Set<Long> commonFriends: " + commonFriends);
-
-        System.out.println("otherUser.getFriendsId(): " + otherUser.getFriendsId());
-
         commonFriends.retainAll(otherUser.getFriendsId());
-        System.out.println("return commonFriends: " + commonFriends);
+
         return commonFriends;
-        /*Set<Friends> user1Friends = this.getFriends();
-        Set<Friends> user2Friends = otherUser.getFriends();
-        return user1Friends.stream()
-                .filter(user2Friends::contains)
-                .collect(Collectors.toSet());
-        */
-        /*Set<Long> commonFriends = new HashSet<>();
-        //Set<Long> commonFriends = new HashSet<>(this.friends.);
-        Set<Long> friends = new HashSet<>();// = this.getFriends(this.getFriends())
-        friends.addAll(this.getFriends());
-        commonFriends.addAll()
-
-        commonFriends.retainAll(otherUser.getFriends());
-
-        return commonFriends;*/
     }
-
 }
