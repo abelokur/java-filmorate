@@ -59,10 +59,10 @@ public class FilmRepository extends BaseRepository<Film> implements FilmStorage 
         film.get().setDuration(Duration.ofSeconds(film.get().getDuration().getSeconds() / 1440));
 
         String sqlQueryMpa = "SELECT mpa FROM films WHERE id = ?";
-        Long id_film = jdbcTemplate.queryForObject(sqlQueryMpa, new LongRowMapper<Long>(), film.get().getId());
+        Long idFilm = jdbcTemplate.queryForObject(sqlQueryMpa, new LongRowMapper<Long>(), film.get().getId());
 
         String sqlQueryMpaObject = "SELECT * FROM MPA WHERE id = ?";
-        Mpa mpa = jdbcTemplate.queryForObject(sqlQueryMpaObject, new MpaRowMapper(), id_film);
+        Mpa mpa = jdbcTemplate.queryForObject(sqlQueryMpaObject, new MpaRowMapper(), idFilm);
 
         film.get().setMpa(mpa);
 
