@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Slf4j
 @Service
-public class MpaRepository extends BaseRepository<Mpa>{
+public class MpaRepository extends BaseRepository<Mpa> {
     private static final String FIND_ALL_QUERY = "SELECT * FROM mpa";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM mpa WHERE id = ?";
 
@@ -27,13 +27,13 @@ public class MpaRepository extends BaseRepository<Mpa>{
 
     public Mpa getById(long id) {
 
-        Optional<Mpa> Mpa =  findOne(FIND_BY_ID_QUERY, id);
+        Optional<Mpa> mpa =  findOne(FIND_BY_ID_QUERY, id);
 
-        if (Mpa.isEmpty()) {
+        if (mpa.isEmpty()) {
             throw new NotFoundException("Рейтинг с id: " + id + " не найден");
         }
 
-        log.info("Запрос рейтинга : {}", Mpa.get());
-        return Mpa.get();
+        log.info("Запрос рейтинга : {}", mpa.get());
+        return mpa.get();
     }
 }
