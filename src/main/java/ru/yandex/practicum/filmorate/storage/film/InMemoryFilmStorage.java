@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.storage.film;
 
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
@@ -13,7 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
-//@Component
+@Component
 public class InMemoryFilmStorage implements FilmStorage {
 
     public static LocalDate CINEMA_BIRTHDAY = LocalDate.of(1895, 12, 28);
