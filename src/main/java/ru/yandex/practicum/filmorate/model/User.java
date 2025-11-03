@@ -18,7 +18,7 @@ public class User {
 
     private LocalDate birthday;
 
-    private Set<Long> friends = new HashSet<>();
+    private Set<Friends> friends = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
@@ -34,12 +34,21 @@ public class User {
         return Long.hashCode(id);
     }
 
-    public Set<Long> findCommonFriends(User otherUser) {
-        Set<Long> commonFriends = new HashSet<>(this.friends);
+    private Set<Long> getFriendsId() {
+        Set<Long> friendsIds = new HashSet<>();
 
-        commonFriends.retainAll(otherUser.getFriends());
+        for (Friends friend : this.getFriends()) {
+            friendsIds.add(friend.getId());
+        }
+
+        return friendsIds;
+    }
+
+    public Set<Long> findCommonFriends(User otherUser) {
+
+        Set<Long> commonFriends = this.getFriendsId();//new HashSet<>();
+        commonFriends.retainAll(otherUser.getFriendsId());
 
         return commonFriends;
     }
-
 }

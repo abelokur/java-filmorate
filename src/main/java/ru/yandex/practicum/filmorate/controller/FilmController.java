@@ -2,64 +2,59 @@ package ru.yandex.practicum.filmorate.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.filmorate.dal.FilmRepository;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.service.FilmService;
-import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
 import java.text.ParseException;
 import java.util.Collection;
-import java.util.Set;
 
 @Slf4j
 @RestController
 @RequestMapping("/films")
 public class FilmController {
 
-    private final FilmStorage filmStorage;
-    private final FilmService filmService;
+    private final FilmRepository filmRepository;
 
     @Autowired
-    public FilmController(FilmStorage filmStorage, FilmService filmService) {
-
-        this.filmStorage = filmStorage;
-        this.filmService = filmService;
+    public FilmController(FilmRepository filmRepository) {
+        this.filmRepository = filmRepository;
     }
 
     @GetMapping("/{id}")
-    public Film getFilm(@PathVariable long id) {
-        return filmStorage.getById(id);
+    public ResponseEntity getFilm(@PathVariable long id) {
+        return ResponseEntity.ok(filmRepository.getById(id));
     }
 
     @PostMapping
-    public Film create(@RequestBody Film film) throws ParseException {
-
-        return filmStorage.create(film);
+    public ResponseEntity create(@RequestBody Film film) throws ParseException {
+        return ResponseEntity.ok(filmRepository.create(film));
     }
 
     @PutMapping
-    public Film update(@RequestBody Film film) {
+    public ResponseEntity update(@RequestBody Film film) {
 
-        return filmStorage.update(film);
+        return ResponseEntity.ok(filmRepository.update(film));
     }
 
     @GetMapping
-    public Collection<Film> findAll() {
+    public ResponseEntity<Collection<Film>> findAll() {
 
-        return filmStorage.findAll();
-    }
-
-    @PutMapping("/{id}/like/{userId}")
-    public Film addLike(@PathVariable long userId, @PathVariable long id) {
-        return filmService.addLike(userId, id);
+        return ResponseEntity.ok(filmRepository.findAll());
     }
 
     @DeleteMapping("/{id}/like/{userId}")
-    public Film removeLike(@PathVariable long userId, @PathVariable long id) {
-        return filmService.removeLike(userId, id);
+    public ResponseEntity removeLike(@PathVariable long userId, @PathVariable long id) {
+        return ResponseEntity.ok(filmRepository.removeLike(userId, id));
+    }
+
+    @PutMapping("/{id}/like/{userId}")
+    public ResponseEntity addLike(@PathVariable long userId, @PathVariable long id) {
+        return ResponseEntity.ok(filmRepository.addLike(userId, id));
     }
 
     @GetMapping("/popular")
-    public Set<Film> getMostPopular(@RequestParam(defaultValue = "10") long count) {
-        return filmService.getMostPopular(count);
+    public ResponseEntity<Collection<Film>> getMostPopular(@RequestParam(defaultValue = "10") long count) {
+        return ResponseEntity.ok(filmRepository.getMostPopular(count));
     }
 }

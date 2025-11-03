@@ -10,7 +10,6 @@ import java.time.Duration;
 public class MyDurationSerializer extends JsonSerializer<Duration> {
     @Override
     public void serialize(Duration value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-        long seconds = value.toSeconds();
-        gen.writeNumber(seconds);
+        gen.writeNumber(value.toMinutes());
     }
 }
