@@ -38,7 +38,7 @@ public class FilmController {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<Film>>findAll() {
+    public ResponseEntity<Collection<Film>> findAll() {
 
         return ResponseEntity.ok(filmRepository.findAll());
     }
