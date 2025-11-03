@@ -2,6 +2,7 @@ package ru.yandex.practicum.filmorate.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,12 +25,12 @@ public class MpaController {
     }
 
     @GetMapping
-    public Collection<Mpa> findAll() {
-        return mpaRepository.findAll();
+    public ResponseEntity<Collection<Mpa>> findAll() {
+        return ResponseEntity.ok(mpaRepository.findAll());
     }
 
     @GetMapping("/{id}")
-    public Mpa getMpa(@PathVariable long id) {
-        return mpaRepository.getById(id);
+    public ResponseEntity getMpa(@PathVariable long id) {
+        return ResponseEntity.ok(mpaRepository.getById(id));
     }
 }

@@ -2,6 +2,7 @@ package ru.yandex.practicum.filmorate.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,13 +25,13 @@ public class GenreController {
     }
 
     @GetMapping
-    public Collection<Genres> findAll() {
+    public ResponseEntity<Collection<Genres>> findAll() {
 
-        return genreRepository.findAll();
+        return ResponseEntity.ok(genreRepository.findAll());
     }
 
     @GetMapping("/{id}")
-    public Genres getUser(@PathVariable long id) {
-        return genreRepository.getById(id);
+    public ResponseEntity getUser(@PathVariable long id) {
+        return ResponseEntity.ok(genreRepository.getById(id));
     }
 }

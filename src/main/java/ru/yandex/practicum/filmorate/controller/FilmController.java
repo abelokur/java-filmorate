@@ -2,6 +2,7 @@ package ru.yandex.practicum.filmorate.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.dal.FilmRepository;
 import ru.yandex.practicum.filmorate.model.Film;
@@ -21,39 +22,39 @@ public class FilmController {
     }
 
     @GetMapping("/{id}")
-    public Film getFilm(@PathVariable long id) {
-        return filmRepository.getById(id);
+    public ResponseEntity getFilm(@PathVariable long id) {
+        return ResponseEntity.ok(filmRepository.getById(id));
     }
 
     @PostMapping
-    public Film create(@RequestBody Film film) throws ParseException {
-        return filmRepository.create(film);
+    public ResponseEntity create(@RequestBody Film film) throws ParseException {
+        return ResponseEntity.ok(filmRepository.create(film));
     }
 
     @PutMapping
-    public Film update(@RequestBody Film film) {
+    public ResponseEntity update(@RequestBody Film film) {
 
-        return filmRepository.update(film);
+        return ResponseEntity.ok(filmRepository.update(film));
     }
 
     @GetMapping
-    public Collection<Film> findAll() {
+    public ResponseEntity<Collection<Film> >findAll() {
 
-        return filmRepository.findAll();
+        return ResponseEntity.ok(filmRepository.findAll());
     }
 
     @DeleteMapping("/{id}/like/{userId}")
-    public Film removeLike(@PathVariable long userId, @PathVariable long id) {
-        return filmRepository.removeLike(userId, id);
+    public ResponseEntity removeLike(@PathVariable long userId, @PathVariable long id) {
+        return ResponseEntity.ok(filmRepository.removeLike(userId, id));
     }
 
     @PutMapping("/{id}/like/{userId}")
-    public Film addLike(@PathVariable long userId, @PathVariable long id) {
-        return filmRepository.addLike(userId, id);
+    public ResponseEntity addLike(@PathVariable long userId, @PathVariable long id) {
+        return ResponseEntity.ok(filmRepository.addLike(userId, id));
     }
 
     @GetMapping("/popular")
-    public Collection<Film> getMostPopular(@RequestParam(defaultValue = "10") long count) {
-        return filmRepository.getMostPopular(count);
+    public ResponseEntity<Collection<Film>> getMostPopular(@RequestParam(defaultValue = "10") long count) {
+        return ResponseEntity.ok(filmRepository.getMostPopular(count));
     }
 }
